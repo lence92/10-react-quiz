@@ -10,6 +10,7 @@ import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
+import BackButton from "./BackButton";
 
 const SECS_PER_QUESTION = 30;
 
@@ -56,6 +57,9 @@ function reducer(state, action) {
       };
     case "nextQuestion":
       return { ...state, index: state.index + 1 };
+
+    case "previousQuestion":
+      return { ...state, index: state.index - 1 };
 
     case "finish":
       return {
@@ -135,13 +139,14 @@ export default function App() {
               answer={answers[index] ?? null}
             />
             <Footer>
-              <Timer dispatch={dispatch} secondsRemaning={secondsRemaning} />
+              <BackButton dispatch={dispatch} index={index} />
               <NextButton
                 dispatch={dispatch}
                 answer={answers[index] ?? null}
                 index={index}
                 numQuestions={numQuestions}
               />
+              <Timer dispatch={dispatch} secondsRemaning={secondsRemaning} />
             </Footer>
           </>
         )}

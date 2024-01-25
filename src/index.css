@@ -144,6 +144,11 @@ progress {
   float: right;
 }
 
+.btn-ui-left {
+  float: left;
+  margin-bottom: 3rem;
+}
+
 .options {
   display: flex;
   flex-direction: column;
@@ -206,6 +211,7 @@ progress {
 
 .timer {
   float: left;
+  clear: left;
   font-size: 1.8rem;
   color: var(--color-medium);
   border: 2px solid var(--color-dark);
