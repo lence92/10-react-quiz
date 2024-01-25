@@ -18,7 +18,7 @@ const initialState = {
   // 'loading', 'error', 'ready', 'active', 'finished'
   status: "loading",
   index: 0,
-  answer: null,
+  answers: [],
   points: 0,
   highscore: 0,
   secondsRemaning: null,
@@ -48,14 +48,14 @@ function reducer(state, action) {
 
       return {
         ...state,
-        answer: action.payload,
+        answers: [...state.answers, action.payload],
         points:
           action.payload === question.correctOption
             ? state.points + question.points
             : state.points,
       };
     case "nextQuestion":
-      return { ...state, index: state.index + 1, answer: null };
+      return { ...state, index: state.index + 1 };
 
     case "finish":
       return {
@@ -93,7 +93,7 @@ function reducer(state, action) {
 
 export default function App() {
   const [
-    { questions, status, index, answer, points, highscore, secondsRemaning },
+    { questions, status, index, answers, points, highscore, secondsRemaning },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -127,18 +127,18 @@ export default function App() {
               numQuestions={numQuestions}
               points={points}
               maxPossiblePoints={maxPossiblePoints}
-              answer={answer}
+              answer={answers[index] ?? null}
             />
             <Question
               question={questions[index]}
               dispatch={dispatch}
-              answer={answer}
+              answer={answers[index] ?? null}
             />
             <Footer>
               <Timer dispatch={dispatch} secondsRemaning={secondsRemaning} />
               <NextButton
                 dispatch={dispatch}
-                answer={answer}
+                answer={answers[index] ?? null}
                 index={index}
                 numQuestions={numQuestions}
               />
