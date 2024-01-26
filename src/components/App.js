@@ -23,6 +23,7 @@ const initialState = {
   points: 0,
   highscore: 0,
   secondsRemaning: null,
+  numQuestions: 0,
 };
 
 function reducer(state, action) {
@@ -31,6 +32,7 @@ function reducer(state, action) {
       return {
         ...state,
         questions: action.payload,
+        numQuestions: action.payload.length,
         status: "ready",
       };
     case "dataFailed":
@@ -38,11 +40,16 @@ function reducer(state, action) {
         ...state,
         status: "error",
       };
+    case "setNumQuestions":
+      return {
+        ...state,
+        numQuestions: action.payload,
+      };
     case "start":
       return {
         ...state,
         status: "active",
-        secondsRemaning: state.questions.length * SECS_PER_QUESTION,
+        secondsRemaning: state.numQuestions * SECS_PER_QUESTION,
       };
     case "newAnswer":
       const question = state.questions.at(state.index);
@@ -97,15 +104,22 @@ function reducer(state, action) {
 
 export default function App() {
   const [
-    { questions, status, index, answers, points, highscore, secondsRemaning },
+    {
+      questions,
+      status,
+      index,
+      answers,
+      points,
+      highscore,
+      secondsRemaning,
+      numQuestions,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  const numQuestions = questions.length;
-  const maxPossiblePoints = questions.reduce(
-    (prev, cur) => prev + cur.points,
-    0
-  );
+  const maxPossiblePoints = questions
+    .filter((question, index) => index <= numQuestions)
+    .reduce((prev, cur) => prev + cur.points, 0);
 
   useEffect(function () {
     fetch("http://localhost:8000/questions")
@@ -122,7 +136,7 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+          <StartScreen maxNumQuestions={questions.length} dispatch={dispatch} />
         )}
         {status === "active" && (
           <>
