@@ -14,8 +14,16 @@ import BackButton from "./BackButton";
 
 const SECS_PER_QUESTION = 30;
 
+export const LEVELS = {
+  EASY: 10,
+  MEDIUM: 20,
+  HARD: 30,
+  ALL: 0,
+};
+
 const initialState = {
   questions: [],
+  filteredQuestions: [],
   // 'loading', 'error', 'ready', 'active', 'finished'
   status: "loading",
   index: 0,
@@ -24,6 +32,7 @@ const initialState = {
   highscore: 0,
   secondsRemaning: null,
   numQuestions: 0,
+  level: LEVELS.ALL,
 };
 
 function reducer(state, action) {
@@ -32,27 +41,46 @@ function reducer(state, action) {
       return {
         ...state,
         questions: action.payload,
+        filteredQuestions: action.payload,
         numQuestions: action.payload.length,
         status: "ready",
       };
+
     case "dataFailed":
       return {
         ...state,
         status: "error",
       };
+
     case "setNumQuestions":
       return {
         ...state,
         numQuestions: action.payload,
       };
+
+    case "setLevel":
+      const filteredQuestions = state.questions.filter(
+        (question) =>
+          (action.payload !== 0 && question.points === action.payload) ||
+          action.payload === 0
+      );
+
+      return {
+        ...state,
+        level: action.payload,
+        filteredQuestions: filteredQuestions,
+        numQuestions: filteredQuestions.length,
+      };
+
     case "start":
       return {
         ...state,
         status: "active",
         secondsRemaning: state.numQuestions * SECS_PER_QUESTION,
       };
+
     case "newAnswer":
-      const question = state.questions.at(state.index);
+      const question = state.filteredQuestions.at(state.index);
 
       return {
         ...state,
@@ -62,6 +90,7 @@ function reducer(state, action) {
             ? state.points + question.points
             : state.points,
       };
+
     case "nextQuestion":
       return { ...state, index: state.index + 1 };
 
@@ -87,6 +116,8 @@ function reducer(state, action) {
       return {
         ...initialState,
         questions: state.questions,
+        filteredQuestions: state.questions,
+        numQuestions: state.questions.length,
         status: "ready",
       };
 
@@ -105,7 +136,7 @@ function reducer(state, action) {
 export default function App() {
   const [
     {
-      questions,
+      filteredQuestions,
       status,
       index,
       answers,
@@ -113,12 +144,13 @@ export default function App() {
       highscore,
       secondsRemaning,
       numQuestions,
+      level,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  const maxPossiblePoints = questions
-    .filter((question, index) => index <= numQuestions)
+  const maxPossiblePoints = filteredQuestions
+    .filter((question, index) => index < numQuestions)
     .reduce((prev, cur) => prev + cur.points, 0);
 
   useEffect(function () {
@@ -136,7 +168,12 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <StartScreen maxNumQuestions={questions.length} dispatch={dispatch} />
+          <StartScreen
+            maxNumQuestions={filteredQuestions.length}
+            numQuestions={numQuestions}
+            dispatch={dispatch}
+            level={level}
+          />
         )}
         {status === "active" && (
           <>
@@ -148,7 +185,7 @@ export default function App() {
               answer={answers[index] ?? null}
             />
             <Question
-              question={questions[index]}
+              question={filteredQuestions[index]}
               dispatch={dispatch}
               answer={answers[index] ?? null}
             />
