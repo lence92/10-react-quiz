@@ -168,8 +168,12 @@ export default function App() {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:8000/questions"),
-      fetch("http://localhost:8000/highscore"),
+      fetch(
+        "https://my-json-server.typicode.com/lence92/10-react-quiz/questions"
+      ),
+      fetch(
+        "https://my-json-server.typicode.com/lence92/10-react-quiz/highscore"
+      ),
     ])
       .then(([resQuestions, resHighscore]) =>
         Promise.all([resQuestions.json(), resHighscore.json()])
