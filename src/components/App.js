@@ -99,16 +99,19 @@ function reducer(state, action) {
       return { ...state, index: state.index - 1 };
 
     case "finish":
-      fetch("http://localhost:8000/highscore", {
-        method: "PUT",
-        body: JSON.stringify({
-          highscore:
-            state.points > state.highscore ? state.points : state.highscore,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
+      fetch(
+        "https://my-json-server.typicode.com/lence92/10-react-quiz/highscore",
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            highscore:
+              state.points > state.highscore ? state.points : state.highscore,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
 
       return {
         ...state,
