@@ -40,9 +40,10 @@ function reducer(state, action) {
     case "dataReceived":
       return {
         ...state,
-        questions: action.payload,
-        filteredQuestions: action.payload,
-        numQuestions: action.payload.length,
+        questions: action.payload.questions,
+        filteredQuestions: action.payload.questions,
+        numQuestions: action.payload.questions.length,
+        highscore: action.payload.highscore.highscore,
         status: "ready",
       };
 
@@ -98,6 +99,17 @@ function reducer(state, action) {
       return { ...state, index: state.index - 1 };
 
     case "finish":
+      fetch("http://localhost:8000/highscore", {
+        method: "PUT",
+        body: JSON.stringify({
+          highscore:
+            state.points > state.highscore ? state.points : state.highscore,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
       return {
         ...state,
         status: "finished",
@@ -118,6 +130,7 @@ function reducer(state, action) {
         questions: state.questions,
         filteredQuestions: state.questions,
         numQuestions: state.questions.length,
+        highscore: state.highscore,
         status: "ready",
       };
 
@@ -153,10 +166,20 @@ export default function App() {
     .filter((question, index) => index < numQuestions)
     .reduce((prev, cur) => prev + cur.points, 0);
 
-  useEffect(function () {
-    fetch("http://localhost:8000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  useEffect(() => {
+    Promise.all([
+      fetch("http://localhost:8000/questions"),
+      fetch("http://localhost:8000/highscore"),
+    ])
+      .then(([resQuestions, resHighscore]) =>
+        Promise.all([resQuestions.json(), resHighscore.json()])
+      )
+      .then(([dataQuestions, dataHighscore]) => {
+        dispatch({
+          type: "dataReceived",
+          payload: { questions: dataQuestions, highscore: dataHighscore },
+        });
+      })
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
 
@@ -173,6 +196,7 @@ export default function App() {
             numQuestions={numQuestions}
             dispatch={dispatch}
             level={level}
+            highscore={highscore}
           />
         )}
         {status === "active" && (

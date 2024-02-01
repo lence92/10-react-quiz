@@ -1,9 +1,17 @@
 import { LEVELS } from "./App";
 
-function StartScreen({ maxNumQuestions, numQuestions, dispatch, level }) {
+function StartScreen({
+  maxNumQuestions,
+  numQuestions,
+  dispatch,
+  level,
+  highscore,
+}) {
   return (
     <div className="start">
       <h2>Welcome to The React Quiz!</h2>
+
+      <h3>Your highscore: {highscore}</h3>
 
       <div className="form-group mx-30">
         <label className="form-label grid-label">
