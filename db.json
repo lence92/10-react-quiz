@@ -151,5 +151,7 @@
       "id": "7192"
     }
   ],
-  "highscore": null
+  "highscore": {
+    "highscore": 0
+  }
 }
