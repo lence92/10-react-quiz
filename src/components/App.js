@@ -11,6 +11,8 @@ import FinishScreen from "./FinishScreen";
 import Footer from "./Footer";
 import Timer from "./Timer";
 import BackButton from "./BackButton";
+import DifficultyLevel from "./DifficultyLevel";
+import NumberOfQuestions from "./NumberOfQuestions";
 
 const SECS_PER_QUESTION = 30;
 
@@ -198,13 +200,14 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <StartScreen
-            maxNumQuestions={filteredQuestions.length}
-            numQuestions={numQuestions}
-            dispatch={dispatch}
-            level={level}
-            highscore={highscore}
-          />
+          <StartScreen highscore={highscore} dispatch={dispatch}>
+            <DifficultyLevel level={level} dispatch={dispatch} />
+            <NumberOfQuestions
+              maxNumQuestions={filteredQuestions.length}
+              numQuestions={numQuestions}
+              dispatch={dispatch}
+            />
+          </StartScreen>
         )}
         {status === "active" && (
           <>
