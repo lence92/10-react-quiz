@@ -2,47 +2,31 @@
   "questions": [
     {
       "question": "Which is the most popular JavaScript framework?",
-      "options": [
-        "Angular",
-        "React",
-        "Svelte",
-        "Vue"
-      ],
+      "options": ["Angular", "React", "Svelte", "Vue"],
       "correctOption": 1,
-      "points": 10
+      "points": 10,
+      "id": "51f4"
     },
     {
       "question": "Which company invented React?",
-      "options": [
-        "Google",
-        "Apple",
-        "Netflix",
-        "Facebook"
-      ],
+      "options": ["Google", "Apple", "Netflix", "Facebook"],
       "correctOption": 3,
-      "points": 10
+      "points": 10,
+      "id": "5b6b"
     },
     {
       "question": "What's the fundamental building block of React apps?",
-      "options": [
-        "Components",
-        "Blocks",
-        "Elements",
-        "Effects"
-      ],
+      "options": ["Components", "Blocks", "Elements", "Effects"],
       "correctOption": 0,
-      "points": 10
+      "points": 10,
+      "id": "0778"
     },
     {
       "question": "What's the name of the syntax we use to describe the UI in React components?",
-      "options": [
-        "FBJ",
-        "Babel",
-        "JSX",
-        "ES2015"
-      ],
+      "options": ["FBJ", "Babel", "JSX", "ES2015"],
       "correctOption": 2,
-      "points": 10
+      "points": 10,
+      "id": "6536"
     },
     {
       "question": "How does data flow naturally in React apps?",
@@ -53,18 +37,15 @@
         "The developers decides"
       ],
       "correctOption": 0,
-      "points": 10
+      "points": 10,
+      "id": "3f43"
     },
     {
       "question": "How to pass data into a child component?",
-      "options": [
-        "State",
-        "Props",
-        "PropTypes",
-        "Parameters"
-      ],
+      "options": ["State", "Props", "PropTypes", "Parameters"],
       "correctOption": 1,
-      "points": 10
+      "points": 10,
+      "id": "e41a"
     },
     {
       "question": "When to use derived state?",
@@ -75,7 +56,8 @@
         "Whenever the state can be computed from another state variable"
       ],
       "correctOption": 3,
-      "points": 30
+      "points": 30,
+      "id": "063c"
     },
     {
       "question": "What triggers a UI re-render in React?",
@@ -86,7 +68,8 @@
         "Adding event listeners to DOM elements"
       ],
       "correctOption": 2,
-      "points": 20
+      "points": 20,
+      "id": "c732"
     },
     {
       "question": "When do we directly \"touch\" the DOM in React?",
@@ -97,7 +80,8 @@
         "Almost never"
       ],
       "correctOption": 3,
-      "points": 20
+      "points": 20,
+      "id": "bf91"
     },
     {
       "question": "In what situation do we use a callback to update state?",
@@ -108,7 +92,8 @@
         "When the new state depends on the previous state"
       ],
       "correctOption": 3,
-      "points": 30
+      "points": 30,
+      "id": "8490"
     },
     {
       "question": "If we pass a function to useState, when will that function be called?",
@@ -119,18 +104,15 @@
         "The first time we update the state"
       ],
       "correctOption": 2,
-      "points": 30
+      "points": 30,
+      "id": "a1bc"
     },
     {
       "question": "Which hook to use for an API request on the component's initial render?",
-      "options": [
-        "useState",
-        "useEffect",
-        "useRef",
-        "useReducer"
-      ],
+      "options": ["useState", "useEffect", "useRef", "useReducer"],
       "correctOption": 1,
-      "points": 10
+      "points": 10,
+      "id": "acaf"
     },
     {
       "question": "Which variables should go into the useEffect dependency array?",
@@ -141,7 +123,8 @@
         "All variables needed for clean up"
       ],
       "correctOption": 2,
-      "points": 30
+      "points": 30,
+      "id": "7729"
     },
     {
       "question": "An effect will always run on the initial render.",
@@ -152,7 +135,8 @@
         "In depends on the code in the effect"
       ],
       "correctOption": 0,
-      "points": 30
+      "points": 30,
+      "id": "fa8c"
     },
     {
       "question": "When will an effect run if it doesn't have a dependency array?",
@@ -163,10 +147,9 @@
         "Each time the component is re-rendered"
       ],
       "correctOption": 3,
-      "points": 20
+      "points": 20,
+      "id": "7192"
     }
   ],
-  "highscore": {
-    "highscore": 50
-  }
+  "highscore": null
 }
