@@ -103,6 +103,7 @@ function reducer(state, action) {
     case "finish":
       fetch(
         "https://my-json-server.typicode.com/lence92/10-react-quiz/highscore",
+        // "http://localhost:8000/highscore",
         {
           method: "PUT",
           body: JSON.stringify({
@@ -175,9 +176,11 @@ export default function App() {
     Promise.all([
       fetch(
         "https://my-json-server.typicode.com/lence92/10-react-quiz/questions"
+        // "http://localhost:8000/questions"
       ),
       fetch(
         "https://my-json-server.typicode.com/lence92/10-react-quiz/highscore"
+        // "http://localhost:8000/highscore"
       ),
     ])
       .then(([resQuestions, resHighscore]) =>
